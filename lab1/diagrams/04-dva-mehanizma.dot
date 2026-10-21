@@ -1,0 +1,46 @@
+
+digraph G {
+  graph [
+    fontname="DejaVu Sans",
+    bgcolor="white",
+    pad="0.45",
+    nodesep="0.42",
+    ranksep="0.72",
+    splines=true,
+    outputorder=edgesfirst
+  ];
+  node [
+    fontname="DejaVu Sans",
+    fontsize=13,
+    shape=box,
+    style="rounded,filled",
+    color="#1C2B33",
+    penwidth=1.4,
+    margin="0.16,0.10"
+  ];
+  edge [
+    fontname="DejaVu Sans",
+    fontsize=11,
+    color="#3D5159",
+    penwidth=1.2,
+    arrowsize=0.8
+  ];
+
+  label="Рис. 4. Два механизма до базы";
+  labelloc=t;
+  fontsize=20;
+  fontname="DejaVu Sans";
+
+  click [label="Нажатие «лучшее свободное место»", fillcolor="#F3F4F6"];
+  gate1 [label="1. Окно очереди\nномер уже допущен\nи 60 секунд не истекли?", shape=diamond, fillcolor="#FFF4DE", color="#A15C07"];
+  no1 [label="Отказ\nPostgres не вызывается", fillcolor="#FDECEC", color="#B42318"];
+  gate2 [label="2. Жетон holds:primary\nобщий бюджет холдов\nжетон на эту секунду есть?", shape=diamond, fillcolor="#FFF4DE", color="#A15C07"];
+  no2 [label="«Окно ещё ваше,\nповторите через секунду»\nBEGIN нет", fillcolor="#FDECEC", color="#B42318"];
+  db [label="Первичный Postgres\nусловный переход free → held\nповторная проверка строки", fillcolor="#E7EEF8", color="#2451A3"];
+
+  click -> gate1;
+  gate1 -> no1 [label="нет"];
+  gate1 -> gate2 [label="да"];
+  gate2 -> no2 [label="нет"];
+  gate2 -> db [label="да"];
+}

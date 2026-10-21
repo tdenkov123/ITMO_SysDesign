@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="860" viewBox="0 0 1280 860">
+<rect width="100%" height="100%" fill="white"/>
+<text x="640.0" y="42" text-anchor="middle" font-family="DejaVu Sans" font-size="22" fill="#1C2B33">Рис. 5. Что происходит в 12:00:00</text>
+<text x="640.0" y="70" text-anchor="middle" font-family="DejaVu Sans" font-size="13" fill="#5C6B73">Горячий путь не рисует origin: оболочка и снимок уже на CDN</text>
+<rect x="122.5" y="118" width="210" height="64" rx="10" fill="#F3F4F6" stroke="#374151" stroke-width="1.6"/>
+<text x="227.5" y="144" text-anchor="middle" font-family="DejaVu Sans" font-size="14" fill="#1C2B33">Браузер</text>
+<line x1="227.5" y1="182" x2="227.5" y2="822" stroke="#8AA0A8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<rect x="397.5" y="118" width="210" height="64" rx="10" fill="#E5F4F1" stroke="#1F7A6B" stroke-width="1.6"/>
+<text x="502.5" y="144" text-anchor="middle" font-family="DejaVu Sans" font-size="14" fill="#1C2B33">CDN</text>
+<line x1="502.5" y1="182" x2="502.5" y2="822" stroke="#8AA0A8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<rect x="672.5" y="118" width="210" height="64" rx="10" fill="#FFF4DE" stroke="#A15C07" stroke-width="1.6"/>
+<text x="777.5" y="144" text-anchor="middle" font-family="DejaVu Sans" font-size="14" fill="#1C2B33">Redis</text>
+<text x="777.5" y="162" text-anchor="middle" font-family="DejaVu Sans" font-size="14" fill="#1C2B33">очереди и жетона</text>
+<line x1="777.5" y1="182" x2="777.5" y2="822" stroke="#8AA0A8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<rect x="947.5" y="118" width="210" height="64" rx="10" fill="#E7EEF8" stroke="#2451A3" stroke-width="1.6"/>
+<text x="1052.5" y="144" text-anchor="middle" font-family="DejaVu Sans" font-size="14" fill="#1C2B33">Первичный</text>
+<text x="1052.5" y="162" text-anchor="middle" font-family="DejaVu Sans" font-size="14" fill="#1C2B33">Postgres</text>
+<line x1="1052.5" y1="182" x2="1052.5" y2="822" stroke="#8AA0A8" stroke-width="1.4" stroke-dasharray="5 5"/>
+<line x1="227.5" y1="218" x2="492.5" y2="218" stroke="#3D5159" stroke-width="1.5"/>
+<polygon points="500.5,218 490.5,213 490.5,223" fill="#3D5159"/>
+<rect x="135.0" y="196" width="460" height="18" fill="white"/>
+<text x="365.0" y="210" text-anchor="middle" font-family="DejaVu Sans" font-size="13" fill="#1C2B33">1. GET оболочка</text>
+<line x1="502.5" y1="290" x2="237.5" y2="290" stroke="#3D5159" stroke-width="1.5"/>
+<polygon points="229.5,290 239.5,285 239.5,295" fill="#3D5159"/>
+<rect x="135.0" y="268" width="460" height="18" fill="white"/>
+<text x="365.0" y="282" text-anchor="middle" font-family="DejaVu Sans" font-size="13" fill="#1C2B33">2. Из кэша, origin не вызывается</text>
+<line x1="227.5" y1="362" x2="492.5" y2="362" stroke="#3D5159" stroke-width="1.5"/>
+<polygon points="500.5,362 490.5,357 490.5,367" fill="#3D5159"/>
+<rect x="135.0" y="340" width="460" height="18" fill="white"/>
+<text x="365.0" y="354" text-anchor="middle" font-family="DejaVu Sans" font-size="13" fill="#1C2B33">3. GET снимок</text>
+<line x1="502.5" y1="434" x2="237.5" y2="434" stroke="#3D5159" stroke-width="1.5"/>
+<polygon points="229.5,434 239.5,429 239.5,439" fill="#3D5159"/>
+<rect x="135.0" y="412" width="460" height="18" fill="white"/>
+<text x="365.0" y="426" text-anchor="middle" font-family="DejaVu Sans" font-size="13" fill="#1C2B33">4. serving, as_of, три счётчика</text>
+<path d="M 227.5 506 C 291.5 506, 291.5 534, 227.5 540" fill="none" stroke="#3D5159" stroke-width="1.4"/>
+<polygon points="227.5,546 235.5,534 225.5,536" fill="#3D5159"/>
+<text x="301.5" y="520" text-anchor="start" font-family="DejaVu Sans" font-size="13" fill="#3D5159">5. Ждёт (номер − serving) / 500</text>
+<line x1="227.5" y1="578" x2="767.5" y2="578" stroke="#3D5159" stroke-width="1.5"/>
+<polygon points="775.5,578 765.5,573 765.5,583" fill="#3D5159"/>
+<rect x="272.5" y="556" width="460" height="18" fill="white"/>
+<text x="502.5" y="570" text-anchor="middle" font-family="DejaVu Sans" font-size="13" fill="#1C2B33">6. POST холд, когда окно открыто</text>
+<path d="M 777.5 650 C 713.5 650, 713.5 678, 777.5 684" fill="none" stroke="#B42318" stroke-width="1.4"/>
+<polygon points="777.5,690 769.5,678 779.5,680" fill="#B42318"/>
+<text x="703.5" y="664" text-anchor="end" font-family="DejaVu Sans" font-size="13" fill="#B42318">7. Окна нет или жетона нет — ответ без BEGIN</text>
+<line x1="777.5" y1="722" x2="1042.5" y2="722" stroke="#3D5159" stroke-width="1.5"/>
+<polygon points="1050.5,722 1040.5,717 1040.5,727" fill="#3D5159"/>
+<rect x="685.0" y="700" width="460" height="18" fill="white"/>
+<text x="915.0" y="714" text-anchor="middle" font-family="DejaVu Sans" font-size="13" fill="#1C2B33">8. Жетон есть: условный переход free → held</text>
+<line x1="1052.5" y1="794" x2="237.5" y2="794" stroke="#3D5159" stroke-width="1.5"/>
+<polygon points="229.5,794 239.5,789 239.5,799" fill="#3D5159"/>
+<rect x="410.0" y="772" width="460" height="18" fill="white"/>
+<text x="640.0" y="786" text-anchor="middle" font-family="DejaVu Sans" font-size="13" fill="#1C2B33">9. Ответ из снимка строки, PDF = confirmed_text</text>
+</svg>

@@ -1,0 +1,83 @@
+
+digraph G {
+  graph [
+    fontname="DejaVu Sans",
+    bgcolor="white",
+    pad="0.45",
+    nodesep="0.42",
+    ranksep="0.72",
+    splines=true,
+    outputorder=edgesfirst
+  ];
+  node [
+    fontname="DejaVu Sans",
+    fontsize=13,
+    shape=box,
+    style="rounded,filled",
+    color="#1C2B33",
+    penwidth=1.4,
+    margin="0.16,0.10"
+  ];
+  edge [
+    fontname="DejaVu Sans",
+    fontsize=11,
+    color="#3D5159",
+    penwidth=1.2,
+    arrowsize=0.8
+  ];
+
+  label="Рис. 1. Путь чтения: толпа остаётся на CDN";
+  labelloc=t;
+  fontsize=20;
+  fontname="DejaVu Sans";
+  rankdir=TB;
+  newrank=true;
+
+  browser [label="Браузер\nоболочка один раз, снимок каждые 2 с ± 0,5 с\nномер очереди считается на клиенте", fillcolor="#F3F4F6"];
+  { rank=min; browser; }
+
+  subgraph cluster_read {
+    label="Чтение. Сюда приходят 100 000 запросов/с";
+    fontname="DejaVu Sans";
+    fontsize=14;
+    color="#1F7A6B";
+    penwidth=1.5;
+    style="rounded";
+    bgcolor="#F4FBFA";
+
+    shell [label="CDN: оболочка\nTTL 10 мин\nописание, площадка, время", fillcolor="#E5F4F1"];
+    snap [label="CDN: снимок\nTTL 1 с\nстатус, serving, три счётчика", fillcolor="#E5F4F1"];
+    origin [label="Origin оболочки\nтолько промах, не больше\nодного запроса на узел", fillcolor="#F7F7F5"];
+    redis_snap [label="Redis снимка\nготовый JSON", fillcolor="#FFF4DE", color="#A15C07"];
+    worker [label="Воркер, раз в 200 мс\nas_of — время реплики", fillcolor="#FFF4DE", color="#A15C07"];
+    replica [label="Реплика первичного узла\nагрегат наличия\nпродажу не разрешает", fillcolor="#E7EEF8", color="#2451A3"];
+
+    shell -> origin [style=dashed, label="промах"];
+    snap -> redis_snap [style=dashed, label="промах\nпосле схлопывания"];
+    worker -> redis_snap [label="публикация"];
+    replica -> worker [label="COUNT и SUM"];
+  }
+
+  subgraph cluster_buy {
+    label="Покупка. В базу уходит не больше бюджета холдов";
+    fontname="DejaVu Sans";
+    fontsize=14;
+    color="#B42318";
+    penwidth=1.5;
+    style="rounded";
+    bgcolor="#FDF8F8";
+
+    queue [label="Сервис очереди\nодин номер на user_id\nокно 60 с", fillcolor="#F3F4F6"];
+    redis_q [label="Redis очереди\nномер и serving", fillcolor="#FFF4DE", color="#A15C07"];
+    token [label="Жетон holds:primary\nобщий для всех процессов\nпроверка до BEGIN", fillcolor="#FDECEC", color="#B42318"];
+    primary [label="Первичный Postgres\nfree → held\nповторная проверка строки", fillcolor="#E7EEF8", color="#2451A3"];
+
+    queue -> redis_q;
+    queue -> token [label="холд только\nесли окно открыто"];
+    token -> primary [label="жетон есть"];
+  }
+
+  browser -> shell [label="оболочка"];
+  browser -> snap [label="снимок"];
+  browser -> queue [label="вход в зал"];
+}

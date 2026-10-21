@@ -1,0 +1,48 @@
+
+digraph G {
+  graph [
+    fontname="DejaVu Sans",
+    bgcolor="white",
+    pad="0.45",
+    nodesep="0.42",
+    ranksep="0.72",
+    splines=true,
+    outputorder=edgesfirst
+  ];
+  node [
+    fontname="DejaVu Sans",
+    fontsize=13,
+    shape=box,
+    style="rounded,filled",
+    color="#1C2B33",
+    penwidth=1.4,
+    margin="0.16,0.10"
+  ];
+  edge [
+    fontname="DejaVu Sans",
+    fontsize=11,
+    color="#3D5159",
+    penwidth=1.2,
+    arrowsize=0.8
+  ];
+
+  label="Рис. 2. Схема данных: билет печатает снимок, не сектор";
+  labelloc=t;
+  fontsize=20;
+  fontname="DejaVu Sans";
+  rankdir=LR;
+  node [shape=plain, style="", margin="0"];
+
+  events [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#1C2B33"><TR><TD BGCOLOR="#1F3A4D"><FONT FACE="DejaVu Sans" COLOR="white" POINT-SIZE="14"><B>events</B></FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">sale_status</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">on_sale_at</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">home_region</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">title, venue, starts_at</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">description</FONT></TD></TR></TABLE>>];
+  sectors [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#1C2B33"><TR><TD BGCOLOR="#1F3A4D"><FONT FACE="DejaVu Sans" COLOR="white" POINT-SIZE="14"><B>sectors</B></FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">event_id</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">title</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">kind: numbered | box | ga</FONT></TD></TR></TABLE>>];
+  units [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#1C2B33"><TR><TD BGCOLOR="#2451A3"><FONT FACE="DejaVu Sans" COLOR="white" POINT-SIZE="14"><B>inventory_units</B></FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">kind, label</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">row, seat — только место</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">admits ≥ 1</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">price_amount</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">status: free | held | sold</FONT></TD></TR></TABLE>>];
+  lines [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#1C2B33"><TR><TD BGCOLOR="#1F7A6B"><FONT FACE="DejaVu Sans" COLOR="white" POINT-SIZE="14"><B>order_lines</B></FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">снимок события и сектора</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">kind, label, row, seat, admits</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">price_amount, price_scope</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">confirmed_text — текст PDF</FONT></TD></TR></TABLE>>];
+  orders [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#1C2B33"><TR><TD BGCOLOR="#5C6B73"><FONT FACE="DejaVu Sans" COLOR="white" POINT-SIZE="14"><B>orders</B></FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">user_id</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">status, idempotency_key</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">переходы статуса — работа 2</FONT></TD></TR></TABLE>>];
+  note [label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" COLOR="#1C2B33"><TR><TD BGCOLOR="#7A4E12"><FONT FACE="DejaVu Sans" COLOR="white" POINT-SIZE="14"><B>Ограничение вида</B></FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">место: ряд, место, admits = 1</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">ложа: без ряда, admits ≥ 1</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">входной: без места, admits = 1</FONT></TD></TR><TR><TD ALIGN="LEFT" BGCOLOR="#FFFFFF"><FONT FACE="DejaVu Sans" POINT-SIZE="12">пустой label или admits нельзя сохранить</FONT></TD></TR></TABLE>>];
+
+  events -> sectors [label="1 → N"];
+  sectors -> units [label="1 → N\nвид совпадает"];
+  units -> lines [label="снимок\nв момент холда"];
+  orders -> lines [label="1 → N"];
+  units -> note [style=dashed, arrowhead=none, color="#A15C07"];
+}

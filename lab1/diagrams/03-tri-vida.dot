@@ -1,0 +1,46 @@
+
+digraph G {
+  graph [
+    fontname="DejaVu Sans",
+    bgcolor="white",
+    pad="0.45",
+    nodesep="0.42",
+    ranksep="0.72",
+    splines=true,
+    outputorder=edgesfirst
+  ];
+  node [
+    fontname="DejaVu Sans",
+    fontsize=13,
+    shape=box,
+    style="rounded,filled",
+    color="#1C2B33",
+    penwidth=1.4,
+    margin="0.16,0.10"
+  ];
+  edge [
+    fontname="DejaVu Sans",
+    fontsize=11,
+    color="#3D5159",
+    penwidth=1.2,
+    arrowsize=0.8
+  ];
+
+  label="Рис. 3. Три вида единицы и три строки на странице";
+  labelloc=t;
+  fontsize=20;
+  fontname="DejaVu Sans";
+  rankdir=LR;
+
+  seat [label="Место\nnumbered_seat\nadmits = 1\nряд и место обязательны\nцена за кресло", fillcolor="#E7EEF8", color="#2451A3"];
+  box [label="Ложа\nbox\nadmits ≥ 1\nряда нет\nцена за всю ложу", fillcolor="#FFF4DE", color="#A15C07"];
+  ga [label="Входной билет\nga_admission\nadmits = 1\nместа нет\nцена за человека", fillcolor="#E5F4F1", color="#1F7A6B"];
+
+  page [shape=box, label="Страница показывает три строки\n12 400 нумерованных мест\n4 ложи, в них 48 гостей\n3 200 входных билетов", fillcolor="#F7F7F5"];
+  banned [label="Общего поля «осталось мест» нет\n12 400 + 4 + 3 200 = 15 604 — не показываем\n12 400 + 48 + 3 200 = 15 648 — не показываем", fillcolor="#FDECEC", color="#B42318"];
+
+  seat -> page;
+  box -> page;
+  ga -> page;
+  page -> banned [style=dashed, label="сложить нельзя"];
+}
